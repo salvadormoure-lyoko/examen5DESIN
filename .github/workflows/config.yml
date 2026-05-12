@@ -35,7 +35,7 @@ jobs:
       - name: Build EXE (Windows)
         if: matrix.os == 'windows-latest'
         run: |
-          pyinstaller --onefile --windowed --name "mi_aplicacion" main.py
+          pyinstaller --onefile --windowed --name "calculadora" main.py
         # El ejecutable aparecerá en la carpeta dist/
 
       # --- PASO PARA LINUX (.DEB) ---
@@ -43,12 +43,12 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           # 1. Crear binario base con PyInstaller
-          pyinstaller --onefile --name "mi_aplicacion" main.py
+          pyinstaller --onefile --name "calculadora" main.py
           
           # 2. Crear estructura de carpetas para el .deb
           mkdir -p pkg/usr/local/bin
           mkdir -p pkg/DEBIAN
-          cp dist/mi_aplicacion pkg/usr/local/bin/
+          cp dist/calculadora pkg/usr/local/bin/
           
           # 3. Crear archivo de control para Debian
           cat <<EOF > pkg/DEBIAN/control
@@ -62,8 +62,8 @@ jobs:
           EOF
           
           # 4. Empaquetar
-          dpkg-deb --build pkg mi_aplicacion.deb
-          mv mi_aplicacion.deb dist/
+          dpkg-deb --build pkg calculadora.deb
+          mv calculadora.deb dist/
 
       # --- GENERAR ARTIFACT ---
       - name: Subir Artifact
